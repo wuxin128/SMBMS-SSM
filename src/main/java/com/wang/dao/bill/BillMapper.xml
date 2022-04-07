@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.dao.bill.BillMapper">
+
+    <resultMap id="result" type="bill">
+        <id property="providerName" column="proName"></id>
+    </resultMap>
+
+    <select id="getBillList" parameterType="map" resultMap="result">
+        select b.*,p.proName from smbms_bill b
+        join smbms_provider p where b.providerId = p.id
+        <if test="productName != null">
+            and productName like #{productName}
+        </if>
+        <if test="providerId != null">
+            and providerId = #{providerId}
+        </if>
+        <if test="isPayment > 0">
+            and isPayment = #{isPayment}
+        </if>
+        order by creationDate
+    </select>
+</mapper>

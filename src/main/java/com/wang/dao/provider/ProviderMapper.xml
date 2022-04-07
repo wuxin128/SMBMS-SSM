@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.dao.provider.ProviderMapper">
+
+    <select id="getProviderCount" parameterType="map" resultType="int">
+        select count(1) from smbms_provider
+        <where>
+            <if test="proName!=null">
+                proName like #{proName}
+            </if>
+            <if test="proCode!=null">
+                and proCode like #{proCode}
+            </if>
+        </where>
+    </select>
+
+    <select id="getProviderList" parameterType="map" resultType="provider">
+        select * from smbms_provider
+        <where>
+            <if test="proName!=null">
+                proName like #{proName}
+            </if>
+            <if test="proCode!=null">
+                and proCode like #{proCode}
+            </if>
+        </where>
+        order by creationDate desc limit #{currentPageNo},#{pageSize}
+    </select>
+</mapper>
